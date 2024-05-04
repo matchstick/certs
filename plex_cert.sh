@@ -11,6 +11,10 @@ CERTDIR="$1"
 OUTDIR="$2"
 HOSTNAME="$3"
 
+echo $CERTDIR
+echo $OUTDIR
+echo $HOSTNAME
+
 KEY="$CERTDIR/$HOSTNAME.key"
 CERT="$CERTDIR/$HOSTNAME.cer"
 CHAIN="$CERTDIR/fullchain.cer"
@@ -22,3 +26,5 @@ sudo openssl pkcs12 \
 	-inkey $KEY \
 	-in $CERT \
 	-certfile $CHAIN
+
+sudo chown mhr:mhr $OUTDIR/certificate.pfx
