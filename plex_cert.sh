@@ -16,7 +16,7 @@ CERT="$CERTDIR/$HOSTNAME.cer"
 CHAIN="$CERTDIR/fullchain.cer"
 
 sudo openssl pkcs12 \
-	-passout pass: -passin pass:"" \
+	-passout pass: -passin pass:"default" \
 	-export \
 	-out $OUTDIR/certificate.pfx \
 	-inkey $KEY \
