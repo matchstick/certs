@@ -7,7 +7,6 @@ if [ $# -ne 1 ]
 fi
 
 CF_Token=$(<$1)
-echo $CF_Token
 acme.sh \
 	--cron \
 	--force \
