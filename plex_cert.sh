@@ -1,3 +1,5 @@
+#!/bin/bash -e
+
 # We are not using a strong password for this ssl cert
 # As this is just to secure it locall in the home for plex
 
