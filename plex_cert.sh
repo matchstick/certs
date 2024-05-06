@@ -20,16 +20,16 @@ echo $HOSTNAME
 KEY="$CERTDIR/$HOSTNAME.key"
 CERT="$CERTDIR/$HOSTNAME.cer"
 CHAIN="$CERTDIR/fullchain.cer"
-PFX="$OUTDIR/certificate.pfx"
+PFX="$OUTDIR/$HOSTNAME.pfx"
 
 rm -f $PFX
 
 sudo openssl pkcs12 \
-	-passout pass: -passin pass:"default" \
 	-export \
 	-out $PFX \
 	-inkey $KEY \
 	-in $CERT \
-	-certfile $CHAIN
+	-name $HOSTNAME \
+	-passout pass:""
 
 sudo chown mhr:mhr $PFX
