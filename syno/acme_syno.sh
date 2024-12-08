@@ -23,7 +23,7 @@ export CF_Email=$EMAIL
 export SYNO_PASSWORD=
 export SYNO_USERNAME=
 
-if [ $CMD eq "issue" ]; then
+if [ "$CMD" = "issue" ]; then
 	./acme.sh/acme.sh --register-account  -m $EMAIL --server zerossl
 	./acme.sh/acme.sh --server zerossl --issue -d $HOSTNAME --dns dns_cf
 	./acme.sh/acme.sh --force --debug --issue --dns dns_cf -d $DOMAIN -d $HOSTNAME
