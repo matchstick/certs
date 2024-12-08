@@ -33,7 +33,9 @@ script that uses server as a parameter but right now I am lazy.
 git clone https://github.com/matchstick/certs
 ```
 1. I got lazy and you will need to edit the acme_syno.sh script to add env variables for Cloudflare apis and Synology perms.
+
 | env | value|
+| --- | -----|
 | CF_Token | Cloud Flare API Token |
 | SYNO_PASSWORD| password for your synology accout |
 | SYNO_USERNAME | usernname for the account you are installing with |
