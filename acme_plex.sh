@@ -21,8 +21,14 @@ PFX="$CERTDIR/$HOSTNAME.pfx"
 # We are not using a strong password for this ssl cert
 echo Removing old pfx file
 rm -f $PFX
+
 openssl pkcs12 \
 	-export -out $PFX -inkey $KEY -in $CERT -name $HOSTNAME -passout pass:""
+# Check the exit status
+if [ $? -ne 0 ]; then
+	echo "ERROR::openssl failed"
+fi
+
 echo Generated new pfx file
 cp -f $PFX $PLEX_CFG_DIR
 echo Copied new pfx file
