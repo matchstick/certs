@@ -24,7 +24,7 @@ script that uses server as a parameter but right now I am lazy.
 git clone https://github.com/matchstick/certs
 ```
 
-1. I got lazy and you will need to edit the acme_syno.sh script to add env variables for Cloudflare apis and Synology perms.
+1. I got lazy and you will need to edit the acme_linux.sh script to add env variables for Cloudflare apis and Synology perms.
 
 | env | value|
 | --- | -----|
@@ -38,7 +38,7 @@ git clone https://github.com/matchstick/certs
 
 Another piece of documentation that drove me batty to remember is here.
 First check out [this
-site](https://gist.github.com/churro-s/fa3fdeb5cf10ebb251aa88338b8b37db) for the source and credit.
+site](https://gist.github.com/churro-s/fa3fdeb5cf10ebb251aa88338b8b37db) for the steps in the GUI and context.
 
 Then all you need to do is when the cert is expired run *acme_plex.sh*
 
