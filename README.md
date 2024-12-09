@@ -3,8 +3,11 @@
 Routines for setting up TLS keys in the home.
 Tired of relooking this up for home use.
 
-I use Cloudflare to manage domains but acme docs are pretty easy for other DNS
-handshakes.
+I use Cloudflare to manage domains but acme docs are pretty easy for other DNS handshakes.
+
+All of these scripts (except the plex one) use a cfg file. Example is
+*acme.cfg*. Just a key value file to specify arguments to the scripts. They are
+commented out by default and the scripts will let you know which ones they need.
 
 # Basic Linux cert set up is here
 
@@ -24,13 +27,11 @@ script that uses server as a parameter but right now I am lazy.
 git clone https://github.com/matchstick/certs
 ```
 
-1. I got lazy and you will need to edit the acme_linux.sh script to add env variables for Cloudflare apis and Synology perms.
+1. Issue the cert
+```
+./certs/acme_linux.sh issue <path to cfg>
+```
 
-| env | value|
-| --- | -----|
-| CF_Token | Cloud Flare API Token |
-
-1. Run ./certs/acme_linux.sh issue with proper arguments
 1. Make sure that renewal is in the crontab it should be there automatically.
    But the script will do it by hand if you want.
 
@@ -68,14 +69,14 @@ script that uses server as a parameter but right now I am lazy.
 ```
 git clone https://github.com/matchstick/certs
 ```
-1. I got lazy and you will need to edit the acme_syno.sh script to add env variables for Cloudflare apis and Synology perms.
+1. Issue the certs for synology
 
-| env | value|
-| --- | -----|
-| CF_Token | Cloud Flare API Token |
-| SYNO_PASSWORD| password for your synology accout |
-| SYNO_USERNAME | usernname for the account you are installing with |
+```
+certs/acme_syno.sh issue <cfg file>
+```
 
-1. Run ./certs/acme_syno.sh issue with proper arguments
-1. Add ./certs/acme_syno.sh renew as a command in the GUI for Task scheduler
+1. Add this command to the Task Scheduler in the GUI
+```
+certs/acme_syno.sh renew <cfg file>
+```
 1. Make sure to have output for task scheduler be set up.
