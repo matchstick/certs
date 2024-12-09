@@ -30,9 +30,9 @@ git clone https://github.com/matchstick/certs
 | --- | -----|
 | CF_Token | Cloud Flare API Token |
 
-1. Run ./certs/acme_syno.sh issue with proper arguments
-1. Make sure that renewal is in the crontab.
-
+1. Run ./certs/acme_linux.sh issue with proper arguments
+1. Make sure that renewal is in the crontab it should be there automatically.
+   But the script will do it by hand if you want.
 
 # Plex certificate.
 
@@ -40,7 +40,8 @@ Another piece of documentation that drove me batty to remember is here.
 First check out [this
 site](https://gist.github.com/churro-s/fa3fdeb5cf10ebb251aa88338b8b37db) for the steps in the GUI and context.
 
-Then all you need to do is when the cert is expired run *acme_plex.sh*
+Then all you need to do is when the cert is expired run *acme_plex.sh*. You can
+autpmate this too pretty easily with cron.
 
 # Synology steps are a bit more complicated
 
