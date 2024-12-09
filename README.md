@@ -1,4 +1,4 @@
-# certs
+# TLS and ACME certs for Synology
 
 Routines for setting up TLS keys in the home.
 Tired of relooking this up for home use.
