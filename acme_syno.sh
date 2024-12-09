@@ -1,27 +1,35 @@
 #!/usr/bin/env sh
 
 echo Script name: $0
-
-if [ "$#" -ne 4 ]; then
-	echo "Args are: <cmd> <domain> <hostname> <email>"
+if [ "$#" -ne 2 ]; then
+	echo "Args are: <cmd> <cfg file>"
 	echo "Where <cmd> is either 'issue' or 'renew'"
-	echo "Example #1: $0 issue neverthere.org smaug.neverthere.org mhr@neverthere.org"
-	echo "Example #2: $0 renew neverthere.org smaug.neverthere.org mhr@neverthere.org"
+	echo "Example #1: $0 issue acme.cfg"
+	echo "Example #2: $0 renew acme.cfg"
 	exit 1
 fi
 
 CMD=$1
-DOMAIN=$2
-HOSTNAME=$3
-EMAIL=$4
+# collect the variables in the config file
+source $2
 
-echo "Add env info first"
-exit 1
+is_var_set() {
+  local var_name="$1"
 
-export CF_Token=""
-export CF_Email=$EMAIL
-export SYNO_PASSWORD=
-export SYNO_USERNAME=
+  if [ -n "${!var_name+x}" ]; then
+    echo "Variable '$var_name' is set to '${!var_name}'"
+    return 0  # Success: variable is set
+  else
+    echo "Variable '$var_name' is not set"
+    return 1  # Failure: variable is unset
+  fi
+}
+
+is_var_set "DOMAIN"
+is_var_set "HOSTNAME"
+is_var_set "EMAIL"
+is_var_set "CF_Token"
+is_var_set "CF_Email"
 
 if [ "$CMD" = "issue" ]; then
 	./acme.sh/acme.sh --register-account  -m $EMAIL --server zerossl
