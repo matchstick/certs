@@ -1,25 +1,33 @@
 #!/bin/bash
 
-echo Script name: $0
-
-if [ "$#" -ne 4 ]; then
-        echo "Args are: <cmd> <domain> <hostname> <email>"
+if [ "$#" -ne 2 ]; then
+        echo "Args are: <cfg file>"
         echo "Where <cmd> is either 'issue' or 'renew'"
-        echo "Example #1: $0 issue neverthere.org smaug.neverthere.org mhr@neverthere.org"
-        echo "Example #2: $0 renew neverthere.org smaug.neverthere.org mhr@neverthere.org"
+        echo "Example #1: $0 issue acme.cfg"
         exit 1
 fi
 
-CMD=$1
-DOMAIN=$2
-HOSTNAME=$3
-EMAIL=$4
 
-echo "Add CF_Token"
-exit 1
+CFG=$1
 
-export CF_Token=""
-export CF_Email=$EMAIL
+# collect the variables in the config file
+source $CFG
+
+is_var_set() {
+	local var_name="$1"
+	if [ -n "${!var_name+x}" ]; then
+		echo "Variable '$var_name' is set to '${!var_name}'"
+	else
+		echo "ERROR: '$var_name' must bet set in file $CFG"
+		exit 1  # Failure: variable is unset
+	fi
+}
+
+is_var_set "DOMAIN"
+is_var_set "HOSTNAME"
+is_var_set "EMAIL"
+is_var_set "CF_Token"
+is_var_set "CF_Email"
 
 ~/.acme.sh/acme.sh --register-account  -m $EMAIL --server zerossl
 ~/.acme.sh/acme.sh --server zerossl --issue -d $HOSTNAME --dns dns_cf

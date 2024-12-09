@@ -12,7 +12,7 @@ CMD=$1
 CFG=$2
 
 # collect the variables in the config file
-source $2
+source $CFG
 
 is_var_set() {
 	local var_name="$1"
