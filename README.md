@@ -1,4 +1,4 @@
-# TLS and ACME certs for Synology
+# TLS and ACME certs for Synology and Plex
 
 Routines for setting up TLS keys in the home.
 Tired of relooking this up for home use.
