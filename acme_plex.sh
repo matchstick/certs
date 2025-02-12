@@ -28,7 +28,7 @@ is_var_set() {
 	fi
 }
 
-is_var_set "CERT_DIR"
+is_var_set "CERTDIR"
 is_var_set "HOSTNAME"
 is_var_set "PLEX_CFG_DIR"
 
@@ -46,6 +46,7 @@ openssl pkcs12 \
 # Check the exit status
 if [ $? -ne 0 ]; then
 	echo "ERROR::openssl failed"
+	exit 1
 fi
 
 echo Generated new pfx file
