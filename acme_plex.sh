@@ -2,16 +2,35 @@
 
 echo Script name: $0
 
-if [ "$#" -ne 2 ]; then
-        echo "Args are: <hostname> <plex config dir>"
+if [ "$#" -ne 1 ]; then
+        echo "Args are: <cfg file>"
         exit 1
 fi
 
-HOSTNAME=$1
-PLEX_CFG_DIR=$2
 
+CFG=$1
 
-CERTDIR="/home/$USER/.acme.sh/""$HOSTNAME""_ecc"
+# collect the variables in the config file
+source $CFG
+
+if [[ $? -ne 0 ]]; then
+    echo "Error: Failed to source " $CFG >&2
+    exit 1
+fi
+
+is_var_set() {
+	local var_name="$1"
+	if [ -n "${!var_name+x}" ]; then
+		echo "Variable '$var_name' is set to '${!var_name}'"
+	else
+		echo "ERROR: '$var_name' must bet set in file $CFG"
+		exit 1  # Failure: variable is unset
+	fi
+}
+
+is_var_set "CERT_DIR"
+is_var_set "HOSTNAME"
+is_var_set "PLEX_CFG_DIR"
 
 KEY="$CERTDIR/$HOSTNAME.key"
 CERT="$CERTDIR/$HOSTNAME.cer"

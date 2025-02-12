@@ -14,6 +14,11 @@ CFG=$2
 # collect the variables in the config file
 source $CFG
 
+if [[ $? -ne 0 ]]; then
+    echo "Error: Failed to source " $CFG >&2
+    exit 1
+fi
+
 is_var_set() {
 	local var_name="$1"
 	if [ -n "${!var_name+x}" ]; then

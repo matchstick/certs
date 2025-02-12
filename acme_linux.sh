@@ -8,10 +8,16 @@ if [ "$#" -ne 2 ]; then
 fi
 
 
-CFG=$1
+CMD=$1
+CFG=$2
 
 # collect the variables in the config file
 source $CFG
+
+if [[ $? -ne 0 ]]; then
+    echo "Error: Failed to source " $CFG >&2
+    exit 1
+fi
 
 is_var_set() {
 	local var_name="$1"
@@ -29,6 +35,11 @@ is_var_set "EMAIL"
 is_var_set "CF_Token"
 is_var_set "CF_Email"
 
-~/.acme.sh/acme.sh --register-account  -m $EMAIL --server zerossl
-~/.acme.sh/acme.sh --server zerossl --issue -d $HOSTNAME --dns dns_cf
-~/.acme.sh/acme.sh --force --issue --dns dns_cf -d $DOMAIN -d $HOSTNAME
+
+if [ "$CMD" = "issue" ]; then
+	~/.acme.sh/acme.sh --register-account  -m $EMAIL --server zerossl
+	~/.acme.sh/acme.sh --server zerossl --issue -d $HOSTNAME --dns dns_cf
+	~/.acme.sh/acme.sh --force --issue --dns dns_cf -d $DOMAIN -d $HOSTNAME
+else
+	./.acme.sh/acme.sh --renew -d $DOMAIN -d $HOSTNAME --force --dns dns_cf
+fi
